@@ -1,15 +1,16 @@
 const express = require('express');
-const uploadConfig = require('./config/upload');
 const multer = require('multer');
+const uploadConfig = require('./config/upload');
 
 const PostController = require('./controllers/PostController');
 const LikeController = require('./controllers/LikeController');
 
-const router = express.Router();
+const app = new express.Router();
 const upload = multer(uploadConfig);
 
-router.get("/posts", PostController.index);
-router.post("/posts", upload.single('image'),PostController.store);
+app.get('/posts', PostController.index);
+app.post('/posts', upload.single('image') , PostController.store);
 
-router.post("/posts/:id/like", LikeController.store);
-module.exports = router;
+app.post('/posts/:id/like', LikeController.store);
+
+module.exports = app;
